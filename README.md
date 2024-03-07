@@ -8,4 +8,8 @@
 
 
 
-### UNDER DEVELOPMENT
+### UNDER DEVELOPMENT LIST
+
+* Stress
+* Keybinds
+* Performance
