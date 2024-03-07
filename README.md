@@ -2,7 +2,7 @@
 # Player status hud for QBCore/ESX
 
 
-![img](https://imgur.com/FESSGZ6)
+![img](https://i.imgur.com/FESSGZ6.png)
 
 
 
