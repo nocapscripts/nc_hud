@@ -1,4 +1,4 @@
-if Config.FrameWork == "esx" then
+if Config.FrameWork == "ESX" then
     
     RS.Framework.RegisterCommand("hud", "user", function(xPlayer, args, showError)
         xPlayer.triggerEvent("rs_hud:Client:OpenHudSettings")
@@ -31,7 +31,7 @@ if Config.FrameWork == "esx" then
         }
     })
     
-elseif Config.FrameWork == "qb" then
+elseif Config.FrameWork == "QB" then
     
     RS.Framework.Commands.Add("hud", _t("hud.commands.hudsettings.help"), {}, false, function(source, args)
         local src = source

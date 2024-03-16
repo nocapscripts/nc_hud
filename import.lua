@@ -1,24 +1,24 @@
-QBCore = {}
-QBCore.PlayerData = {}
-QBCore.Settings = QBConfig
+NPX = {}
+NPX.PlayerData = {}
+NPX.Settings = QBConfig
 
 
-QBCore.Shared = QBShared
-QBCore.CallBacks = QBCore.CallBacks
+NPX.Shared = QBShared
+NPX.CallBacks = NPX.CallBacks
 
 
 -- NEW ONES
---QBCore.DB = {}
---QBCore.Util = QBCore.Util
---QBCore.Database = QBCore.Database
---QBCore.DataControls = DataControls
---QBCore.Controls = Controls
+--NPX.DB = {}
+--NPX.Util = NPX.Util
+--NPX.Database = NPX.Database
+--NPX.DataControls = DataControls
+--NPX.Controls = Controls
 
 
-QBCore.Functions = QBCore.Functions
+NPX.Functions = NPX.Functions
 
 exports('GetCoreObject', function()
-    return QBCore
+    return NPX
 end)
 
-QBCore = exports['qb-core']:GetCoreObject()
+NPX = exports['qb-core']:GetCoreObject()

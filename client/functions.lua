@@ -18,12 +18,12 @@ end
 
 function RS.Client:SendNotify(title, type, duration, icon, text)
     system = Config.NotifyType
-    if system == "esx" then
-        if Config.FrameWork == "esx" then
+    if system == "ESX" then
+        if Config.FrameWork == "ESX" then
             RS.Framework.ShowNotification(title, type, duration)
         end
-    elseif system == "qb" then
-        if Config.FrameWork == "qb" then
+    elseif system == "QB" then
+        if Config.FrameWork == "QB" then
             RS.Framework.Functions.Notify(title, type)
         end
     elseif system == "custom" then
@@ -36,9 +36,9 @@ DisplayRadar(false)
 
 
 function RS.Client:GetPlayerData()
-    if Config.FrameWork == "esx" then
+    if Config.FrameWork == "ESX" then
         return RS.Framework.GetPlayerData()
-    elseif Config.FrameWork == "qb" then
+    elseif Config.FrameWork == "QB" then
         return RS.Framework.Functions.GetPlayerData()
     end
 end
@@ -127,18 +127,18 @@ function RS.Client.HUD:GetFuelExport()
     if GetResourceState("ox_fuel") == "started" then
         if Entity(self.data.vehicle.entity) then
             local ent = Entity(self.data.vehicle.entity).state.fuel or 0
-            if Config.FrameWork == "esx" then
+            if Config.FrameWork == "ESX" then
                 return RS.Framework.Math.Round(ent, 2)
-            elseif Config.FrameWork == "qb" then
+            elseif Config.FrameWork == "QB" then
                 return RS.Framework.Shared.Round(ent, 2)
             end
         else
             return false
         end
     elseif GetResourceState("LegacyFuel") == "started" then
-        if Config.FrameWork == "esx" then
+        if Config.FrameWork == "ESX" then
             return RS.Framework.Math.Round(Entity(self.data.vehicle.entity).state.fuel or 0, 2)
-        elseif Config.FrameWork == "qb" then
+        elseif Config.FrameWork == "QB" then
             return RS.Framework.Shared.Round(exports["LegacyFuel"]:GetFuel(self.data.vehicle.entity) or 0, 2)
         end
     else

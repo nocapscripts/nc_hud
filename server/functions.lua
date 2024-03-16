@@ -21,14 +21,14 @@ end
 RS.Server.SendNotify = function(source, type, title, text, duration, icon)
     system = Config.NotifyType
     if not duration then duration = 1000 end
-    if system == "qb" then
-        if Config.FrameWork == "qb" then
-            TriggerClientEvent("QBCore:Notify", source, title, type)
+    if system == "QB" then
+        if Config.FrameWork == "QB" then
+            TriggerClientEvent("NPX:Notify", source, title, type)
         else
             Utils.Functions:debugPrint("error", "QB not found.")
         end
-    elseif system == "esx" then
-        if Config.FrameWork == "esx" then
+    elseif system == "ESX" then
+        if Config.FrameWork == "ESX" then
             TriggerClientEvent("esx:showNotification", source, title, type, duration)
         else
             Utils.Functions:debugPrint("error", "ESX not found.")
@@ -42,9 +42,9 @@ end
 
 
 RS.Server.GetPlayerBySource = function(source)
-    if Config.FrameWork == "esx" then
+    if Config.FrameWork == "ESX" then
         return RS.Framework.GetPlayerFromId(source)
-    elseif Config.FrameWork == "qb" then
+    elseif Config.FrameWork == "QB" then
         return RS.Framework.Functions.GetPlayer(source)
     end
 end

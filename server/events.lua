@@ -14,7 +14,7 @@ end)
 
 RegisterNetEvent('hud:server:GainStress', function(amount)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = NPX.Functions.GetPlayer(src)
     local Job = Player.PlayerData.job.name
     local JobType = Player.PlayerData.job.type
     local newStress
@@ -32,12 +32,12 @@ RegisterNetEvent('hud:server:GainStress', function(amount)
     end
     Player.Functions.SetMetaData('stress', newStress)
     TriggerClientEvent('hud:client:UpdateStress', src, newStress)
-    TriggerClientEvent('QBCore:Notify', src, "Stress gained", 'error', 1500)
+    TriggerClientEvent(Config.NotifyName, src, "Stress gained", 'error', 1500)
 end)
 
 RegisterNetEvent('hud:server:RelieveStress', function(amount)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = NPX.Functions.GetPlayer(src)
     local newStress
     if not Player then return end
     if not ResetStress then
@@ -54,6 +54,6 @@ RegisterNetEvent('hud:server:RelieveStress', function(amount)
     end
     Player.Functions.SetMetaData('stress', newStress)
     TriggerClientEvent('hud:client:UpdateStress', src, newStress)
-    TriggerClientEvent('QBCore:Notify', src, "Stress relieved")
+    TriggerClientEvent(Config.NotifyName, src, "Stress relieved")
 end)
 

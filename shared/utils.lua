@@ -42,18 +42,18 @@ end
 
 
 function Utils.Functions:GetFramework()
-    if Config.FrameWork == "qb" then
-        if not Utils.Functions:hasResource("qb-core") then
-            Utils.Functions:debugPrint("QBCore Framework not working or not installed!")
+    if Config.FrameWork == "QB" then
+        if not Utils.Functions:hasResource(Config.FrameworkName) then
+            Utils.Functions:debugPrint("NPX Framework not working or not installed!")
             return false
         end
-        return exports["qb-core"]:GetCoreObject()
-    elseif Config.FrameWork == "esx" then
-        if not Utils.Functions:hasResource("es_extended") then
+        return exports[Config.FrameworkName]:GetCoreObject()
+    elseif Config.FrameWork == "ESX" then
+        if not Utils.Functions:hasResource(Config.FrameworkName) then
             Utils.Functions:debugPrint("ES_CORE Framework not working or not installed!")
             return false
         end
-        return exports["es_extended"]:getSharedObject()
+        return exports[Config.FrameworkName]:getSharedObject()
     end
 end
 

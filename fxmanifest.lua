@@ -10,7 +10,7 @@ version '2.0.5'
 
 shared_scripts {
     "shared/**/*",
-    '@qb-core/import.lua',
+    '@rs_base/import.lua',
 }
 
 client_scripts {

@@ -5,22 +5,34 @@ Config = {}
 Config.DebugPrint = false -- Debug
 
 
-Config.Locale = "en" -- Language
+Config.Locale = "et" -- Language
 
 
-Config.FrameWork = "qb" -- Framework type
+Config.FrameWork = "QB" -- Framework type ESX or QB
+Config.FrameworkName = "rs_base"
+Config.Voice = 'rs_voice'
 
+-- Events name calling -- QBCore
+Config.NotifyName = "NPX:Notify" -- Framework notify event name
+Config.PlayerLoaded = "NPX:Client:OnPlayerLoaded" -- Playerloaded event name. Name it whatever you have named it
+Config.PlayerUnload = "NPX:Client:OnPlayerUnload" -- PlayerUnload event name
+Config.SetTalkingMode = "rs_voice:setTalkingMode" -- Talking mode event name
+Config.RadioActive = "rs_voice:radioActive" -- Talking active event name
 
-Config.NotifyType = "qb" -- Notify type
+Config.NotifyType = "QB" -- Notify type
 
 Config.DisableStress = false -- Stress
 
-Config.Seatbelt = false -- Vehicle Seatbelt
+Config.Seatbelt = true -- Vehicle Seatbelt
 
 Config.MinimumSpeed = 120
 Config.MinimumSpeedUnbuckled = 120
 
-Config.ServerSidedBinds = false -- Server sided keybindings NB! Use it if you have remade your framework or added these functions it is basically from Nopixel Framework
+Config.SeatBeltKey = "B" -- Seatbelt keybind
+
+
+
+Config.ServerSidedBinds = false -- Server sided keybindings NB! Use it if you have added server sided keybinds into your server
 
 Config.Settings         = {
     StatusBars = {

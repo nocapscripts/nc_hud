@@ -1,3 +1,5 @@
+
+
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(1000)
@@ -31,17 +33,17 @@ RegisterNetEvent("rs_hud:Client:ShowHudElement", function(element, code)
 end)
 -- @ --
 
-if GetResourceState("pma-voice") == "started" then
-    AddEventHandler("rs_voice:setTalkingMode", function(mode)
+if GetResourceState(Config.Voice) == "started" then
+    AddEventHandler(Config.SetTalkingMode, function(mode)
         RS.Client.HUD.data.bars.voice.range = mode
     end)
 
-    AddEventHandler("rs_voice:radioActive", function(radioTalking)
+    AddEventHandler(Config.RadioActive, function(radioTalking)
         RS.Client.HUD.data.bars.voice.radio = radioTalking
     end)
 
     AddEventHandler("onResourceStart", function(resourceName)
-        if not resourceName == "pma-voice" then
+        if not resourceName == Config.Voice then
             return
         end
         Wait(1000)
@@ -61,7 +63,7 @@ else
     RS.Utils:CustomVoiceResource()
 end
 
-if Config.FrameWork == "esx" then
+if Config.FrameWork == "ESX" then
     RegisterNetEvent("esx:playerLoaded", function(xPlayer)
         Wait(1000)
         RS.Client.HUD:Start(xPlayer)
@@ -102,14 +104,14 @@ if Config.FrameWork == "esx" then
         RS.Client.HUD.data.bars.stress = stress
     end)
 end
-if Config.FrameWork == "qb" then
-    RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+if Config.FrameWork == "QB" then
+    RegisterNetEvent(Config.PlayerLoaded, function()
         Wait(1000)
         RS.Client:SendReactMessage("LOAD_HUD_STORAGE")
         RS.Client.HUD:Start(xPlayer)
     end)
 
-    RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
+    RegisterNetEvent(Config.PlayerUnload, function()
         Wait(1000)
         RS.Client.HUD:Toggle(false)
     end)
@@ -127,124 +129,126 @@ if Config.FrameWork == "qb" then
 end
 
 
-if Config.Seatbelt == 'true' then 
+RegisterNetEvent("seatbelt:client:ToggleSeatbelt", function(belt)
+ 
+    RS.Client.HUD.data.vehicle.isSeatbeltOn = belt
 
-    --local RS.Client.HUD.data.vehicle.isSeatbeltOn = false
-    RegisterNetEvent("seatbelt:client:ToggleSeatbelt")
-    AddEventHandler("seatbelt:client:ToggleSeatbelt", function(belt)
-        --seatbelt = belt
-        RS.Client.HUD.data.vehicle.isSeatbeltOn = belt
+end)
 
+
+RegisterNetEvent("seatbelt:client:ToggleCruise", function()
+    RS.Client.HUD.data.vehicle.cruiseControlStatus = not RS.Client.HUD.data.vehicle.cruiseControlStatus
+end)
+
+
+local function toggleSeatbelt()
+    SeatBeltLoop()
+    
+    
+end
+
+-- NB! Here you can add your own progressbar export with seatbelt event!
+function SeatbeltOn()
+    exports['rs_taskbar']:Progress({
+        name = "random_task",
+        duration = 2000,
+        label = "Paned vöö peale . . .",
+        useWhileDead = false,
+        canCancel = true,
+        controlDisables = {
+            disableMovement = false,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        },
+        animation = {
+            animDict = nil,
+            anim = nil,
+            flags = nil,
+        },
+        prop = {},
+        propTwo = {}
+     }, function(cancelled)
+        if not cancelled then
+            RS.Client.HUD.data.vehicle.isSeatbeltOn = true
+            TriggerEvent("seatbelt:client:ToggleSeatbelt",true)
+            TriggerEvent("InteractSound_CL:PlayOnOne","carbuckle", 0.25)
+            TriggerEvent(Config.NotifyName,'Vöö peal!', 'info')
+            toggleSeatbelt()
+        else
+            TriggerEvent(Config.NotifyName,'Loobusid', 'error')
+        end
     end)
-    /*RegisterNetEvent("seatbelt:client:ToggleSeatbelt", function()
-        RS.Client.HUD.data.vehicle.isSeatbeltOn = not RS.Client.HUD.data.vehicle.isSeatbeltOn
-    end)*/
+    
 
-    RegisterNetEvent("seatbelt:client:ToggleCruise", function()
-        RS.Client.HUD.data.vehicle.cruiseControlStatus = not RS.Client.HUD.data.vehicle.cruiseControlStatus
+end
+
+-- NB! Here you can add your own progressbar export with seatbelt event!
+function SeatbeltOff()
+    exports['rs_taskbar']:Progress({
+        name = "random_task",
+        duration = 1500,
+        label = "Võtad vöö maha . . .",
+        useWhileDead = false,
+        canCancel = true,
+        controlDisables = {
+            disableMovement = false,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        },
+        animation = {
+            animDict = nil,
+            anim = nil,
+            flags = nil,
+        },
+        prop = {},
+        propTwo = {}
+     }, function(cancelled)
+        if not cancelled then
+            RS.Client.HUD.data.vehicle.isSeatbeltOn = false
+            TriggerEvent("seatbelt:client:ToggleSeatbelt", false)
+            TriggerEvent("InteractSound_CL:PlayOnOne","carunbuckle", 0.25)
+            TriggerEvent(Config.NotifyName,'Vöö maas', 'warning')
+            toggleSeatbelt()
+            --SeatBeltLoop()
+        else
+            TriggerEvent(Config.NotifyName,'Declined', 'error')
+        end
     end)
+    
 
-    local function toggleSeatbelt()
-        SeatBeltLoop()
-        
-        
-    end
+end
 
-    -- NB! Here you can add your own progressbar export with seatbelt event!
-    function SeatbeltOn()
-        exports['rs_taskbar']:Progress({
-            name = "random_task",
-            duration = 4750,
-            label = "Paned vöö peale . . .",
-            useWhileDead = false,
-            canCancel = true,
-            controlDisables = {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = true,
-            },
-            animation = {
-                animDict = nil,
-                anim = nil,
-                flags = nil,
-            },
-            prop = {},
-            propTwo = {}
-         }, function(cancelled)
-            if not cancelled then
-                RS.Client.HUD.data.vehicle.isSeatbeltOn = true
-                TriggerEvent("seatbelt:client:ToggleSeatbelt",true)
-                TriggerEvent("InteractSound_CL:PlayOnOne","carbuckle", 0.25)
-                TriggerEvent('QBCore:Notify','Vöö on PEAL', 'success')
-                SeatBeltLoop()
-            else
-                TriggerEvent('QBCore:Notify','Loobusid', 'error')
+function SeatBeltLoop()
+    CreateThread(function()
+        while true do
+            local sleep = 0
+            if RS.Client.HUD.data.vehicle.isSeatbeltOn then
+                DisableControlAction(0, 75, true)
+                DisableControlAction(27, 75, true)
             end
-        end)
-        
-    
-    end
-    
-    -- NB! Here you can add your own progressbar export with seatbelt event!
-    function SeatbeltOff()
-        exports['rs_taskbar']:Progress({
-            name = "random_task",
-            duration = 3500,
-            label = "Võtad vöö maha . . .",
-            useWhileDead = false,
-            canCancel = true,
-            controlDisables = {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = true,
-            },
-            animation = {
-                animDict = nil,
-                anim = nil,
-                flags = nil,
-            },
-            prop = {},
-            propTwo = {}
-         }, function(cancelled)
-            if not cancelled then
+            if not IsPedInAnyVehicle(PlayerPedId(), false) then
                 RS.Client.HUD.data.vehicle.isSeatbeltOn = false
-                TriggerEvent("seatbelt:client:ToggleSeatbelt",false)
-                TriggerEvent("InteractSound_CL:PlayOnOne","carunbuckle", 0.25)
-                TriggerEvent('QBCore:Notify','Seatbelt off', 'error')
-                SeatBeltLoop()
-            else
-                TriggerEvent('QBCore:Notify','Declined', 'error')
+                --harnessOn = false
+                TriggerEvent("seatbelt:client:ToggleSeatbelt", false)
+                break
             end
-        end)
-        
-    
-    end
-    
-    function SeatBeltLoop()
-        CreateThread(function()
-            while true do
-                local sleep = 0
-                if RS.Client.HUD.data.vehicle.isSeatbeltOn then
-                    DisableControlAction(0, 75, true)
-                    DisableControlAction(27, 75, true)
-                end
-                if not IsPedInAnyVehicle(PlayerPedId(), false) then
-                    RS.Client.HUD.data.vehicle.isSeatbeltOn = false
-                    --harnessOn = false
-                    TriggerEvent("seatbelt:client:ToggleSeatbelt", false)
-                    break
-                end
-                if not RS.Client.HUD.data.vehicle.isSeatbeltOn then break end
-                Wait(sleep)
-            end
-        end)
-    end
+            if not RS.Client.HUD.data.vehicle.isSeatbeltOn then break end
+            Wait(sleep)
+        end
+    end)
 end
 
 
-if Config.ServerSidedBinds == "true" then 
+
+
+
+
+
+
+ServerBinds = function()
+
     Controlkey = {["seatbelt"] = {29,"B"}} 
     RegisterNetEvent('event:control:update')
     AddEventHandler('event:control:update', function(table)
@@ -258,7 +262,7 @@ if Config.ServerSidedBinds == "true" then
             if not IsPedInAnyVehicle(PlayerPedId(), false) or IsPauseMenuActive() then return end
             local class = GetVehicleClass(GetVehiclePedIsUsing(PlayerPedId()))
             if class == 8 or class == 13 or class == 14 then return end
-            --toggleSeatbelt()
+           
             if RS.Client.HUD.data.vehicle.isSeatbeltOn then 
                 SeatbeltOff()
             else 
@@ -269,11 +273,44 @@ if Config.ServerSidedBinds == "true" then
     
     end)
 
+
+end
+
+
+
+if Config.ServerSidedBinds then
+    ServerBinds()
+
+else 
+    RegisterCommand('+seatbelt', function()
+        if not IsPedInAnyVehicle(PlayerPedId(), false) or IsPauseMenuActive() then return end
+        local class = GetVehicleClass(GetVehiclePedIsUsing(PlayerPedId()))
+        if class == 8 or class == 13 or class == 14 then return end
+   
+        if RS.Client.HUD.data.vehicle.isSeatbeltOn then 
+            SeatbeltOff()
+        else 
+            SeatbeltOn()
+        end
+        print("Seatbelt client side")
+    
+    end)
+    RegisterKeyMapping('+seatbelt', 'Seatbelt', 'keyboard', Config.SeatBeltKey)
 end
 
 RegisterNetEvent('hud:client:UpdateStress', function(newStress) -- Add this event with adding stress elsewhere
     stress = newStress
 end)
+
+
+
+
+
+
+
+
+
+
 
 
 

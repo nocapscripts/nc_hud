@@ -23,7 +23,7 @@ function RS.Client.HUD:MainThick()
             self.data.bars.stamina = stamina or 0
             self.data.bars.terminal = 100 -- ?
             self.data.bars.leaf = 100     -- ?
-            if Config.FrameWork == "qb" then
+            if Config.FrameWork == "QB" then
                 local _Player = RS.Client:GetPlayerData()
                 local health = math.floor(
                     (GetEntityHealth(PlayerPedId()) - 100) /
