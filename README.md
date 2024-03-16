@@ -10,5 +10,4 @@
 
 ### UNDER DEVELOPMENT LIST
 
-* Performance
-* ESX
+* ESX performance
