@@ -10,7 +10,5 @@
 
 ### UNDER DEVELOPMENT LIST
 
-* Stress
-* Keybinds
 * Performance
 * ESX
