@@ -1,4 +1,4 @@
-[[INSTALLATION]]
+### INSTALLATION
 
 ## !NB This HUD is still in under development it is not your fault if this resource not gonna work.
 # I have developing it on my custom made framework where is different functions and events!
